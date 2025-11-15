@@ -1,0 +1,445 @@
+{
+	"info": {
+		"_postman_id": "78851b0c-8f21-4638-9e37-df7b78557f81",
+		"name": "Clean-Up Backend API",
+		"description": "API collection for testing the cleaning services backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "48651754",
+		"_collection_link": "https://ak19111911-1466038.postman.co/workspace/ahmed-khaled's-Workspace~29b678b8-8dc0-4874-8282-7a3d6e0f9229/collection/48651754-78851b0c-8f21-4638-9e37-df7b78557f81?action=share&source=collection_link&creator=48651754"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Admin Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    pm.collectionVariables.set('accessToken', response.accessToken);",
+									"    pm.collectionVariables.set('refreshToken', response.refreshToken);",
+									"    console.log('Tokens saved successfully');",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"admin@cleaningservices.com\",\n  \"password\": \"Admin@123456\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/refresh",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/admin/profile",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Public - Previous Work",
+			"item": [
+				{
+					"name": "Get All Previous Work",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/previous-work?limit=10&offset=0",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"previous-work"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "category",
+									"value": "Commercial",
+									"disabled": true
+								},
+								{
+									"key": "featured",
+									"value": "true",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Featured Work",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/previous-work/featured",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"previous-work",
+								"featured"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Work",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/previous-work/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"previous-work",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "sample-work-1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin - Previous Work",
+			"item": [
+				{
+					"name": "Create Previous Work",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Residential Deep Cleaning",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Complete deep cleaning of a 3-bedroom house including carpet shampooing, window cleaning, and kitchen sanitization.",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "Residential",
+									"type": "text"
+								},
+								{
+									"key": "featured",
+									"value": "true",
+									"type": "text"
+								},
+								{
+									"key": "images",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "images",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/previous-work",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"previous-work"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Previous Work",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Updated Title",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Updated description",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "Commercial",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/previous-work/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"previous-work",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "YOUR_WORK_ID"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Toggle Featured",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/admin/previous-work/:id/toggle-featured",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"previous-work",
+								":id",
+								"toggle-featured"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "sample-work-1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Image",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"imageUrl\": \"https://res.cloudinary.com/your-cloud/image/upload/v1234567890/cleaning-services/previous-work/image.jpg\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/previous-work/:id/image",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"previous-work",
+								":id",
+								"image"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "YOUR_WORK_ID"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Previous Work",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/admin/previous-work/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"previous-work",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "YOUR_WORK_ID"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/health",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"health"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000/api",
+			"type": "string"
+		},
+		{
+			"key": "accessToken",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "refreshToken",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
