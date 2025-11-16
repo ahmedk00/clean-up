@@ -7,7 +7,7 @@ const swaggerOptions = {
       description: "API documentation for Clean-Up service",
     },
     servers: [
-      { url: "https://your-production-url.com" },
+      { url: "https://clean-up-production.up.railway.app" },
       { url: "http://localhost:3000" },
     ],
     components: {
