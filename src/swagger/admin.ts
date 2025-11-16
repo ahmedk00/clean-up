@@ -7,7 +7,7 @@
 
 /**
  * @swagger
- * /api/v1/admin/login:
+ * /api/admin/login:
  *   post:
  *     summary: Admin login with email and password
  *     tags: [Admin]
@@ -38,7 +38,7 @@
 
 /**
  * @swagger
- * /api/v1/admin/refresh:
+ * /api/admin/refresh:
  *   post:
  *     summary: Refresh admin access token
  *     tags: [Admin]
@@ -63,7 +63,7 @@
 
 /**
  * @swagger
- * /api/v1/admin/profile:
+ * /api/admin/profile:
  *   get:
  *     summary: Get admin profile (Protected)
  *     tags: [Admin]
@@ -82,7 +82,7 @@
 
 /**
  * @swagger
- * /api/v1/admin/previous-work:
+ * /api/admin/previous-work:
  *   post:
  *     summary: Create a new previous work entry (Admin only)
  *     tags: [Admin]
@@ -127,7 +127,7 @@
 
 /**
  * @swagger
- * /api/v1/admin/previous-work/{id}:
+ * /api/admin/previous-work/{id}:
  *   put:
  *     summary: Update previous work entry (Admin only)
  *     tags: [Admin]
@@ -171,7 +171,7 @@
 
 /**
  * @swagger
- * /api/v1/admin/previous-work/{id}:
+ * /api/admin/previous-work/{id}:
  *   delete:
  *     summary: Delete a previous work entry (Admin only)
  *     tags: [Admin]
@@ -195,7 +195,7 @@
 
 /**
  * @swagger
- * /api/v1/admin/previous-work/{id}/toggle-featured:
+ * /api/admin/previous-work/{id}/toggle-featured:
  *   patch:
  *     summary: Toggle featured status for a previous work item (Admin only)
  *     tags: [Admin]
@@ -219,7 +219,7 @@
 
 /**
  * @swagger
- * /api/v1/admin/previous-work/{id}/image:
+ * /api/admin/previous-work/{id}/image:
  *   delete:
  *     summary: Delete a specific image from previous work (Admin only)
  *     tags: [Admin]

@@ -103,8 +103,8 @@ const swaggerOptions = {
     ],
   },
 
-  // Path to your swagger controllers (change to .ts for TypeScript)
-  apis: ["./swagger/*.ts"],
+  // Path to your swagger controllers (compiled JS files in dist)
+  apis: ["./dist/swagger/*.js"],
 };
 
 export default swaggerOptions;
