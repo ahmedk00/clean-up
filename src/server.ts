@@ -5,6 +5,11 @@ import adminRoutes from "./routes/admin.routes";
 import publicRoutes from "./routes/public.routes";
 import { errorHandler, notFoundHandler } from "./middleware/errorHandler";
 
+// Swagger
+import swaggerUi from "swagger-ui-express";
+import swaggerJsDoc from "swagger-jsdoc";
+import swaggerOptions from "./utils/swaggerOptions";
+
 const app = express();
 
 // Middleware
@@ -24,6 +29,10 @@ app.get("/health", (req, res) => {
     environment: env.NODE_ENV,
   });
 });
+
+// ================== Swagger ==================
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // API Routes
 app.use("/api/admin", adminRoutes);
