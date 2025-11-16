@@ -11,7 +11,7 @@ cloudinary.v2.config({
 
 // Create storage for previous work images
 export const previousWorkStorage = CloudinaryStorage({
-  cloudinary: cloudinary,
+  cloudinary: cloudinary.v2,
   params: {
     folder: "cleaning-services/previous-work",
     allowed_formats: ["jpg", "jpeg", "png", "webp"],

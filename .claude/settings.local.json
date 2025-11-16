@@ -6,7 +6,13 @@
       "Bash(npm run dev:*)",
       "Bash(curl:*)",
       "Bash(npm run prisma:migrate:*)",
-      "Bash(npm run prisma:seed:*)"
+      "Bash(npm run prisma:seed:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run start:*)",
+      "Bash(node -e:*)",
+      "Bash(dir:*)",
+      "Bash(nul)"
     ],
     "deny": [],
     "ask": []

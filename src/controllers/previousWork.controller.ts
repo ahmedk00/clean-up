@@ -347,7 +347,7 @@ export async function deleteImage(req: Request, res: Response, next: NextFunctio
     }
 
     // Remove image URL from array
-    const updatedImages = existingWork.images.filter((img) => img !== imageUrl);
+    const updatedImages = existingWork.images.filter((img: string) => img !== imageUrl);
 
     // Update previous work
     const updatedWork = await prisma.previousWork.update({
