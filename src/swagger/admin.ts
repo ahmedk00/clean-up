@@ -82,6 +82,29 @@
 
 /**
  * @swagger
+ * /api/admin/logout:
+ *   post:
+ *     summary: Admin logout (Protected)
+ *     tags: [Admin]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Logout successful
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Logout successful
+ *       401:
+ *         description: Unauthorized - missing or invalid token
+ */
+
+/**
+ * @swagger
  * /api/admin/previous-work:
  *   post:
  *     summary: Create a new previous work entry (Admin only)

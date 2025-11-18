@@ -128,3 +128,21 @@ export async function getProfile(req: Request, res: Response, next: NextFunction
     next(error);
   }
 }
+
+// Admin logout
+export async function logout(req: Request, res: Response, next: NextFunction) {
+  try {
+    if (!req.admin) {
+      res.status(401).json({ error: "Not authenticated" });
+      return;
+    }
+
+    // For stateless JWT, we simply return success
+    // The client should delete the tokens from storage
+    res.json({
+      message: "Logout successful",
+    });
+  } catch (error) {
+    next(error);
+  }
+}
