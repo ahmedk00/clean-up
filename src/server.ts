@@ -13,9 +13,13 @@ import swaggerOptions from "./utils/swaggerOptions";
 
 const app = express();
 
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://clean-up-kappa.vercel.app",
+];
 // Middleware
 app.use(cors({
-  origin: "*",
+  origin: allowedOrigins,
   credentials: true,
 }));
 
