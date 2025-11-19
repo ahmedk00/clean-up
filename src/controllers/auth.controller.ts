@@ -58,7 +58,7 @@ export async function login(req: Request, res: Response, next: NextFunction) {
       path :"/",
 
     });
-    res.redirect("/admin");
+    res.redirect("/api/admin/profile");
 
     // Return tokens and admin info
     res.json({
