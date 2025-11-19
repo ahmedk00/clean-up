@@ -44,7 +44,7 @@ export async function login(req: Request, res: Response, next: NextFunction) {
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      sameSite: "none",
       maxAge: 15 * 60 * 1000, // 15 minutes
     });
 
