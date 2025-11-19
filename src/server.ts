@@ -12,9 +12,8 @@ import swaggerOptions from "./utils/swaggerOptions";
 
 const app = express();
 
-// Middleware
 app.use(cors({
-  origin: "*",
+  origin: "https://clean-up-kappa.vercel.app",
   credentials: true,
 }));
 
