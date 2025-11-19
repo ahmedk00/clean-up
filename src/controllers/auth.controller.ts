@@ -44,7 +44,7 @@ export async function login(req: Request, res: Response, next: NextFunction) {
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "none",
+      sameSite: "lax",
       maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
       path :"/",
     });
@@ -52,7 +52,7 @@ export async function login(req: Request, res: Response, next: NextFunction) {
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "none",
+      sameSite: "lax",
       maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
       path :"/",
 
