@@ -66,14 +66,26 @@ export async function verifyRefreshToken(token: string) {
 // Authentication middleware
 export async function authenticate(req: Request, res: Response, next: NextFunction) {
   try {
-    const authHeader = req.headers.authorization;
+    // Get token from cookie or Authorization header
+    let token: string | undefined;
 
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    // First check cookies
+    if (req.cookies?.accessToken) {
+      token = req.cookies.accessToken;
+    }
+    // Fallback to Authorization header
+    else {
+      const authHeader = req.headers.authorization;
+      if (authHeader && authHeader.startsWith("Bearer ")) {
+        token = authHeader.substring(7); // Remove "Bearer " prefix
+      }
+    }
+
+    if (!token) {
       res.status(401).json({ error: "No token provided" });
       return;
     }
 
-    const token = authHeader.substring(7); // Remove "Bearer " prefix
     const payload = await verifyAccessToken(token);
 
     if (!payload) {
