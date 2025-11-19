@@ -45,14 +45,17 @@ export async function login(req: Request, res: Response, next: NextFunction) {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "none",
-      maxAge: 15 * 60 * 1000, // 15 minutes
+      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+      path :"/",
     });
 
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      sameSite: "none",
       maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+      path :"/",
+
     });
 
     // Return tokens and admin info
