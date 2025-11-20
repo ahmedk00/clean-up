@@ -46,19 +46,15 @@ export async function login(req: Request, res: Response, next: NextFunction) {
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-      path :"/",
     });
-    res.redirect("/admin");
 
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-      path :"/",
 
     });
-    res.redirect("/api/admin/profile");
 
     // Return tokens and admin info
     res.json({
