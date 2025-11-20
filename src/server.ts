@@ -16,12 +16,18 @@ const app = express();
 const allowedOrigins = [
   "http://localhost:3000",
   "https://clean-up-kappa.vercel.app",
+  "https://admin-dash-board-clean-up.vercel.app"
+
 ];
 // Middleware
 app.use(cors({
   origin: allowedOrigins,
   credentials: true,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+
 }));
+app.options("*", cors());
 
 app.use(cookieParser());
 app.use(express.json());
