@@ -4,7 +4,6 @@ import { prisma } from "../config/database";
 import { env } from "../config/env";
 import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from "../middleware/auth";
 import { loginSchema } from "../utils/validation";
-import { success } from "zod";
 
 // Admin login
 export async function login(req: Request, res: Response, next: NextFunction) {
@@ -49,8 +48,7 @@ export async function login(req: Request, res: Response, next: NextFunction) {
       maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
       path :"/",
     });
-
-  
+    res.redirect("/api/admin/profile");
 
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
@@ -60,10 +58,10 @@ export async function login(req: Request, res: Response, next: NextFunction) {
       path :"/",
 
     });
+    res.redirect("/api/admin/profile");
 
     // Return tokens and admin info
     res.json({
-      success:true,
       message: "Login successful",
       accessToken,
       refreshToken,
@@ -72,7 +70,7 @@ export async function login(req: Request, res: Response, next: NextFunction) {
         email: admin.email,
         name: admin.name,
       },
-    }).status(200);
+    });
   } catch (error) {
     next(error);
   }
