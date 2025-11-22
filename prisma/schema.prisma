@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../generated/prisma"
@@ -29,7 +23,7 @@ model PreviousWork {
   id          String   @id @default(uuid())
   title       String
   description String   @db.Text
-  images      String[] // Array of Cloudinary URLs
+  images      String[]
   category    String
   featured    Boolean  @default(false)
   createdAt   DateTime @default(now())
@@ -42,17 +36,16 @@ model PreviousWork {
 
 model Contact {
   id        String   @id @default(uuid())
-  hours     String[] @default([])      // مثل: ["Mon-Fri 9–5", "Sat 10–2"]
-  address   String   @default("")      // العنوان string واحد فقط
-  email     String   @default("")      // contact email
-  phone     String   @default("")      // رقم الهاتف
-  whatsapp  String   @default("")      // واتساب
-  facebook  String   @default("")      // فايسبوك
-  instagram String   @default("")      // انستجرام
-  twitter   String   @default("")      // تويتر (اختياري)
+  hours     String[] @default([])
+  address   String   @default("")
+  email     String   @default("")
+  phone     String   @default("")
+  whatsapp  String   @default("")
+  facebook  String   @default("")
+  instagram String   @default("")
+  twitter   String   @default("")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@map("contact")
 }
-

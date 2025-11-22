@@ -14,7 +14,10 @@
       "Bash(dir:*)",
       "Bash(nul)",
       "Bash(npx prisma migrate dev:*)",
-      "Bash(npx prisma migrate:*)"
+      "Bash(npx prisma migrate:*)",
+      "Bash(npx prisma db pull:*)",
+      "Bash(npx prisma db execute:*)",
+      "Bash(npx prisma generate)"
     ],
     "deny": [],
     "ask": []
