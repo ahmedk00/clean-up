@@ -3,6 +3,7 @@ import cors from "cors";
 import { env } from "./config/env";
 import adminRoutes from "./routes/admin.routes";
 import publicRoutes from "./routes/public.routes";
+import contactRoutes from "./routes/contact.routes";
 import { errorHandler, notFoundHandler } from "./middleware/errorHandler";
 
 // Swagger
@@ -37,6 +38,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 // API Routes
 app.use("/api/admin", adminRoutes);
 app.use("/api", publicRoutes);
+app.use("/api",contactRoutes);
 
 // Error handling
 app.use(notFoundHandler);

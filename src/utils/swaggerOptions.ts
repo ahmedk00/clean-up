@@ -94,6 +94,59 @@ const swaggerOptions = {
             },
           },
         },
+
+        Contact: {
+          type: "object",
+          properties: {
+            id: {
+              type: "string",
+              example: "c9e2f4a1-3d5b-4e6f-a7b8-9c0d1e2f3a4b",
+            },
+            hours: {
+              type: "array",
+              items: { type: "string" },
+              example: ["Mon-Fri 9AM-5PM", "Sat 10AM-2PM"],
+            },
+            address: {
+              type: "string",
+              example: "123 Main St, City, Country",
+            },
+            email: {
+              type: "string",
+              example: "contact@cleaningservices.com",
+            },
+            phone: {
+              type: "string",
+              example: "+1234567890",
+            },
+            whatsapp: {
+              type: "string",
+              example: "+1234567890",
+            },
+            facebook: {
+              type: "string",
+              example: "https://facebook.com/cleaningservices",
+            },
+            instagram: {
+              type: "string",
+              example: "https://instagram.com/cleaningservices",
+            },
+            twitter: {
+              type: "string",
+              example: "https://twitter.com/cleaningservices",
+            },
+            createdAt: {
+              type: "string",
+              format: "date-time",
+              example: "2025-01-05T12:34:56.000Z",
+            },
+            updatedAt: {
+              type: "string",
+              format: "date-time",
+              example: "2025-01-10T14:22:10.000Z",
+            },
+          },
+        },
       },
     },
     security: [

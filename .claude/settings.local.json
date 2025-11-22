@@ -12,7 +12,9 @@
       "Bash(npm run start:*)",
       "Bash(node -e:*)",
       "Bash(dir:*)",
-      "Bash(nul)"
+      "Bash(nul)",
+      "Bash(npx prisma migrate dev:*)",
+      "Bash(npx prisma migrate:*)"
     ],
     "deny": [],
     "ask": []

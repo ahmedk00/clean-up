@@ -406,6 +406,88 @@
 			]
 		},
 		{
+			"name": "Contact",
+			"item": [
+				{
+					"name": "Get Contact Info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/contact",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contact"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Contact Info",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"hours\": [\"Mon-Fri 9AM-5PM\", \"Sat 10AM-2PM\"],\n  \"address\": \"123 Main St, City, Country\",\n  \"email\": \"contact@cleaningservices.com\",\n  \"phone\": \"+1234567890\",\n  \"whatsapp\": \"+1234567890\",\n  \"facebook\": \"https://facebook.com/cleaningservices\",\n  \"instagram\": \"https://instagram.com/cleaningservices\",\n  \"twitter\": \"https://twitter.com/cleaningservices\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/contact",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contact"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Contact Info",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"phone\": \"+9876543210\",\n  \"email\": \"info@cleaningservices.com\",\n  \"hours\": [\"Mon-Fri 9AM-6PM\", \"Sat 10AM-3PM\"]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/contact",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contact"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Health Check",
 			"request": {
 				"method": "GET",

@@ -31,7 +31,22 @@ export const queryPreviousWorkSchema = z.object({
   offset: z.coerce.number().min(0).optional().default(0),
 });
 
+export const contactCreateSchema = z.object({
+  hours: z.array(z.string()).optional(),
+  address: z.string().optional(),
+  email: z.string().email().optional(),
+  phone: z.string().optional(),
+  whatsapp: z.string().optional(),
+  facebook: z.string().optional(),
+  instagram: z.string().optional(),
+  twitter: z.string().optional(),
+});
+export const contactPatchSchema = contactCreateSchema.partial();
+
 export type LoginInput = z.infer<typeof loginSchema>;
 export type CreatePreviousWorkInput = z.infer<typeof createPreviousWorkSchema>;
 export type UpdatePreviousWorkInput = z.infer<typeof updatePreviousWorkSchema>;
 export type QueryPreviousWorkInput = z.infer<typeof queryPreviousWorkSchema>;
+export type contactCreateInput = z.infer<typeof contactCreateSchema>;
+export type contactPatchInput = z.infer<typeof contactPatchSchema>;
+

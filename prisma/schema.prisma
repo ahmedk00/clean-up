@@ -6,6 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -38,3 +39,20 @@ model PreviousWork {
   @@index([featured])
   @@map("previous_works")
 }
+
+model Contact {
+  id        String   @id @default(uuid())
+  hours     String[] @default([])      // مثل: ["Mon-Fri 9–5", "Sat 10–2"]
+  address   String   @default("")      // العنوان string واحد فقط
+  email     String   @default("")      // contact email
+  phone     String   @default("")      // رقم الهاتف
+  whatsapp  String   @default("")      // واتساب
+  facebook  String   @default("")      // فايسبوك
+  instagram String   @default("")      // انستجرام
+  twitter   String   @default("")      // تويتر (اختياري)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("contact")
+}
+
