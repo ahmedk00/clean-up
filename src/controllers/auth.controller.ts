@@ -40,6 +40,22 @@ export async function login(req: Request, res: Response, next: NextFunction) {
       id: admin.id,
     });
 
+    // Set cookies
+    res.cookie("accessToken", accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+    });
+
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+
+    });
+
     // Return tokens and admin info
     res.json({
       message: "Login successful",
@@ -59,7 +75,8 @@ export async function login(req: Request, res: Response, next: NextFunction) {
 // Refresh access token
 export async function refresh(req: Request, res: Response, next: NextFunction) {
   try {
-    const { refreshToken } = req.body;
+    // Get refresh token from cookie or body
+    const refreshToken = req.cookies?.refreshToken || req.body.refreshToken;
 
     if (!refreshToken) {
       res.status(400).json({ error: "Refresh token is required" });
@@ -89,6 +106,14 @@ export async function refresh(req: Request, res: Response, next: NextFunction) {
       id: admin.id,
       email: admin.email,
       name: admin.name,
+    });
+
+    // Set new access token cookie
+    res.cookie("accessToken", accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 15 * 60 * 1000, // 15 minutes
     });
 
     res.json({
@@ -124,6 +149,35 @@ export async function getProfile(req: Request, res: Response, next: NextFunction
     }
 
     res.json({ admin });
+  } catch (error) {
+    next(error);
+  }
+}
+
+// Admin logout
+export async function logout(req: Request, res: Response, next: NextFunction) {
+  try {
+    if (!req.admin) {
+      res.status(401).json({ error: "Not authenticated" });
+      return;
+    }
+
+    // Clear cookies
+    res.clearCookie("accessToken", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+    });
+
+    res.clearCookie("refreshToken", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+    });
+
+    res.json({
+      message: "Logout successful",
+    });
   } catch (error) {
     next(error);
   }

@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import { env } from "./config/env";
 import adminRoutes from "./routes/admin.routes";
 import publicRoutes from "./routes/public.routes";
@@ -13,12 +14,22 @@ import swaggerOptions from "./utils/swaggerOptions";
 
 const app = express();
 
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://clean-up-kappa.vercel.app",
+  "https://admin-dash-board-clean-up.vercel.app"
+
+];
 // Middleware
 app.use(cors({
-  origin: env.CORS_ORIGIN,
+  origin: allowedOrigins,
   credentials: true,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+
 }));
 
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

@@ -1,18 +1,12 @@
 import { Request, Response, NextFunction } from "express";
 import { prisma } from "../config/database";
-import { cloudinaryV2 } from "../config/cloudinary";
+import { cloudinary, uploadToCloudinary } from "../config/cloudinary";
 import {
   createPreviousWorkSchema,
   updatePreviousWorkSchema,
   queryPreviousWorkSchema,
 } from "../utils/validation";
 
-// Helper function to extract Cloudinary URL from file object
-function getCloudinaryUrl(file: any): string | null {
-  // multer-storage-cloudinary stores the URL in different properties
-  // Check in order: secure_url, url, path
-  return file.secure_url || file.url || file.path || null;
-}
 
 // Helper function to extract public_id from Cloudinary URL
 function extractPublicIdFromUrl(url: string): string | null {
@@ -60,30 +54,17 @@ export async function createPreviousWork(req: Request, res: Response, next: Next
     // Validate request body
     const data = createPreviousWorkSchema.parse(req.body);
 
-    // Debug: Log file structure to understand what multer-storage-cloudinary provides
-    if (req.files && (req.files as Express.Multer.File[]).length > 0) {
-      console.log("Files received:", JSON.stringify((req.files as Express.Multer.File[]).map((f: any) => ({
-        fieldname: f.fieldname,
-        originalname: f.originalname,
-        path: f.path,
-        url: f.url,
-        secure_url: f.secure_url,
-        public_id: f.public_id,
-        keys: Object.keys(f),
-      })), null, 2));
-    }
+    const files = req.files as Express.Multer.File[];
 
-    // Get uploaded image URLs from Cloudinary
-    const images = (req.files as Express.Multer.File[])
-      ?.map((file: any) => getCloudinaryUrl(file))
-      .filter((url): url is string => url !== null && url !== undefined) || [];
-
-    console.log("Extracted images:", images);
-
-    if (images.length === 0) {
+    if (!files || files.length === 0) {
       res.status(400).json({ error: "At least one image is required" });
       return;
     }
+
+    // Upload images to Cloudinary
+    const uploadPromises = files.map((file) => uploadToCloudinary(file.buffer));
+    const uploadResults = await Promise.all(uploadPromises);
+    const images = uploadResults.map((result) => result.secure_url);
 
     // Create previous work entry
     const previousWork = await prisma.previousWork.create({
@@ -198,10 +179,11 @@ export async function updatePreviousWork(req: Request, res: Response, next: Next
 
     // Handle new image uploads if provided
     let newImages = existingWork.images;
-    if (req.files && (req.files as Express.Multer.File[]).length > 0) {
-      const uploadedImages = (req.files as Express.Multer.File[])
-        .map((file: any) => getCloudinaryUrl(file))
-        .filter((url): url is string => url !== null && url !== undefined);
+    const files = req.files as Express.Multer.File[];
+    if (files && files.length > 0) {
+      const uploadPromises = files.map((file) => uploadToCloudinary(file.buffer));
+      const uploadResults = await Promise.all(uploadPromises);
+      const uploadedImages = uploadResults.map((result) => result.secure_url);
       newImages = [...existingWork.images, ...uploadedImages];
     }
 
@@ -244,7 +226,7 @@ export async function deletePreviousWork(req: Request, res: Response, next: Next
         // Extract public_id from Cloudinary URL
         const publicId = extractPublicIdFromUrl(imageUrl);
         if (publicId) {
-          const result = await cloudinaryV2.uploader.destroy(publicId);
+          const result = await cloudinary.uploader.destroy(publicId);
           console.log(`Deleted image from Cloudinary: ${publicId}`, result);
         } else {
           console.error(`Failed to extract public_id from URL: ${imageUrl}`);
@@ -337,7 +319,7 @@ export async function deleteImage(req: Request, res: Response, next: NextFunctio
     try {
       const publicId = extractPublicIdFromUrl(imageUrl);
       if (publicId) {
-        const result = await cloudinaryV2.uploader.destroy(publicId);
+        const result = await cloudinary.uploader.destroy(publicId);
         console.log(`Deleted image from Cloudinary: ${publicId}`, result);
       } else {
         console.error(`Failed to extract public_id from URL: ${imageUrl}`);

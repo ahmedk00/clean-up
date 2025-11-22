@@ -9,6 +9,7 @@ const router = Router();
 // Authentication routes
 router.post("/login", authController.login);
 router.post("/refresh", authController.refresh);
+router.post("/logout", authenticate, authController.logout);
 router.get("/profile", authenticate, authController.getProfile);
 
 // Previous Work routes (Protected - Admin only)

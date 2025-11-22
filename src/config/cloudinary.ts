@@ -1,5 +1,4 @@
 import { v2 as cloudinary } from "cloudinary";
-import CloudinaryStorage from "multer-storage-cloudinary";
 import { env } from "./env";
 
 // Configure Cloudinary
@@ -9,15 +8,34 @@ cloudinary.config({
   api_secret: env.CLOUDINARY_API_SECRET,
 });
 
-// Create storage for previous work images
-export const previousWorkStorage = CloudinaryStorage({
-  cloudinary: cloudinary,
-  params: {
-    folder: "cleaning-services/previous-work",
-    allowed_formats: ["jpg", "jpeg", "png", "webp"],
-    transformation: [{ width: 1200, height: 800, crop: "limit" }],
-  } as any,
-});
+// Upload image to Cloudinary
+export async function uploadToCloudinary(
+  buffer: Buffer,
+  folder: string = "cleaning-services/previous-work"
+): Promise<{ secure_url: string; public_id: string }> {
+  return new Promise((resolve, reject) => {
+    cloudinary.uploader
+      .upload_stream(
+        {
+          folder,
+          allowed_formats: ["jpg", "jpeg", "png", "webp"],
+          transformation: [{ width: 1200, height: 800, crop: "limit" }],
+        },
+        (error, result) => {
+          if (error) {
+            reject(error);
+          } else if (result) {
+            resolve({
+              secure_url: result.secure_url,
+              public_id: result.public_id,
+            });
+          } else {
+            reject(new Error("Upload failed"));
+          }
+        }
+      )
+      .end(buffer);
+  });
+}
 
 export { cloudinary };
-export const cloudinaryV2 = cloudinary;
